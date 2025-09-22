@@ -2,113 +2,102 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>🌻 Para ti Mi Reina 🌻</title>
+  <title>🌸 Para ti Mi Reina 🌸</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
       background: linear-gradient(to bottom, #fffbe6, #ffe680);
       font-family: "Segoe UI", sans-serif;
-      overflow: hidden;
       text-align: center;
     }
 
     h1 {
       color: #d4a017;
-      font-size: 2.5rem;
+      font-size: 2.2rem;
       margin-bottom: 10px;
     }
 
     p {
       color: #444;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .garden {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+      gap: 20px;
+      max-width: 500px;
     }
 
     .flower {
-      position: absolute;
       font-size: 3rem;
       cursor: pointer;
-      animation: float 8s infinite ease-in-out;
+      transition: transform 0.3s ease;
       user-select: none;
     }
 
-    @media (max-width: 768px) {
-      .flower {
-        font-size: 3.5rem;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-
-      p {
-        font-size: 1rem;
-      }
+    .flower:hover {
+      transform: scale(1.4) rotate(10deg);
     }
 
     .message {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: white;
+      margin-top: 25px;
       padding: 15px 20px;
       border-radius: 15px;
+      background: white;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
       font-size: 1.2rem;
       color: #d4a017;
-      animation: fadeIn 1s ease;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+      display: none;
+      animation: fadeIn 0.6s ease;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translate(-50%, 20px); }
-      to { opacity: 1; transform: translate(-50%, 0); }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <h1>Un detalle especial para ti 💛🌻</h1>
-  <p>Presiona una florcita para ver un mensajito ✨</p>
+  <h1>Un jardín especial para ti 🌸💛🌻</h1>
+  <p>Toca una flor y descubre un mensajito ✨</p>
 
+  <div class="garden" id="garden"></div>
   <div id="message" class="message"></div>
 
   <script>
-    const flowers = ["🌻", "💛", "🌼"];
+    const flowers = ["🌻", "🌼", "🌸", "🌹", "💮", "🌷", "💛"];
     const messages = [
-      "Adorei conhecer você 💛",
-      "Seu sorriso ilumina meus dias 🌟",
-      "Você é mais especial para mim do que imagina ✨",
-      "Eu gosto de passar tempo com você 🌸",
-      "Você é minha luz nos meus dias escuros 🌞",
-      "Me haces muy feliz 💕"
+      "Eres mi alegría más bonita ",
+      "Tu sonrisa me enamora cada día ",
+      "Me encanta pasar tiempo contigo ",
+      "Eres como una flor que ilumina mi vida ",
+      "Gracias por existir ",
+      "Eres lo mejor que me pasó ",
+      "Contigo, todo es más lindo "
     ];
 
-    for (let i = 0; i < 25; i++) {
+    const garden = document.getElementById("garden");
+    const messageBox = document.getElementById("message");
+
+    for (let i = 0; i < 21; i++) {
       let flower = document.createElement("div");
       flower.className = "flower";
       flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
-      flower.style.left = Math.random() * 100 + "vw";
-      flower.style.animationDuration = (5 + Math.random() * 5) + "s";
 
       flower.onclick = () => {
-        let messageBox = document.getElementById("message");
         let randomMessage = messages[Math.floor(Math.random() * messages.length)];
         messageBox.textContent = randomMessage;
         messageBox.style.display = "block";
       };
 
-      document.body.appendChild(flower);
+      garden.appendChild(flower);
     }
   </script>
 </body>
