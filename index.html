@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>🌻 Para ti Mi Reina Lara 🌻</title>
+  <title>🌻 Para ti Mi Reina 🌻</title>
   <style>
     body {
       margin: 0;
@@ -30,10 +30,24 @@
 
     .flower {
       position: absolute;
-      font-size: 2rem;
+      font-size: 3rem;
       cursor: pointer;
       animation: float 8s infinite ease-in-out;
       user-select: none;
+    }
+
+    @media (max-width: 768px) {
+      .flower {
+        font-size: 3.5rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
     }
 
     .message {
@@ -65,18 +79,18 @@
 </head>
 <body>
   <h1>Un detalle especial para ti 💛🌻</h1>
-  <p>Haz clic en una flor y descubre un mensajito secreto ✨</p>
+  <p>Presiona una florcita para ver un mensajito ✨</p>
 
   <div id="message" class="message"></div>
 
   <script>
     const flowers = ["🌻", "💛", "🌼"];
     const messages = [
-      "Me encanta conocerte 💛",
-      "Tu sonrisa ilumina mi día 🌟",
-      "Eres más especial de lo que imaginas ✨",
-      "Me gusta pasar tiempo contigo 🌸",
-      "Eres mi rayito de sol 🌞",
+      "Adorei conhecer você 💛",
+      "Seu sorriso ilumina meus dias 🌟",
+      "Você é mais especial para mim do que imagina ✨",
+      "Eu gosto de passar tempo com você 🌸",
+      "Você é minha luz nos meus dias escuros 🌞",
       "Me haces muy feliz 💕"
     ];
 
@@ -87,7 +101,6 @@
       flower.style.left = Math.random() * 100 + "vw";
       flower.style.animationDuration = (5 + Math.random() * 5) + "s";
 
-      // evento al hacer clic en la flor
       flower.onclick = () => {
         let messageBox = document.getElementById("message");
         let randomMessage = messages[Math.floor(Math.random() * messages.length)];
