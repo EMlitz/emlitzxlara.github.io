@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>🌻 Para ti Mi Reina Lara 🌻</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(to bottom, #fffbe6, #ffe680);
+      font-family: "Segoe UI", sans-serif;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      color: #d4a017;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #444;
+      font-size: 1.2rem;
+    }
+
+    .flower {
+      position: absolute;
+      font-size: 2rem;
+      cursor: pointer;
+      animation: float 8s infinite ease-in-out;
+      user-select: none;
+    }
+
+    .message {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 15px 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      font-size: 1.2rem;
+      color: #d4a017;
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      20% { opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, 20px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Un detalle especial para ti 💛🌻</h1>
+  <p>Haz clic en una flor y descubre un mensajito secreto ✨</p>
+
+  <div id="message" class="message"></div>
+
+  <script>
+    const flowers = ["🌻", "💛", "🌼"];
+    const messages = [
+      "Me encanta conocerte 💛",
+      "Tu sonrisa ilumina mi día 🌟",
+      "Eres más especial de lo que imaginas ✨",
+      "Me gusta pasar tiempo contigo 🌸",
+      "Eres mi rayito de sol 🌞",
+      "Me haces muy feliz 💕"
+    ];
+
+    for (let i = 0; i < 25; i++) {
+      let flower = document.createElement("div");
+      flower.className = "flower";
+      flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+      flower.style.left = Math.random() * 100 + "vw";
+      flower.style.animationDuration = (5 + Math.random() * 5) + "s";
+
+      // evento al hacer clic en la flor
+      flower.onclick = () => {
+        let messageBox = document.getElementById("message");
+        let randomMessage = messages[Math.floor(Math.random() * messages.length)];
+        messageBox.textContent = randomMessage;
+        messageBox.style.display = "block";
+      };
+
+      document.body.appendChild(flower);
+    }
+  </script>
+</body>
+</html>
