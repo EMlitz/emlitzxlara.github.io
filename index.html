@@ -29,21 +29,23 @@
     }
 
     .garden {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-      gap: 20px;
-      max-width: 500px;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+      max-width: 95%;
     }
 
     .flower {
       font-size: 3rem;
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, filter 0.3s ease;
       user-select: none;
     }
 
     .flower:hover {
       transform: scale(1.4) rotate(10deg);
+      filter: brightness(1.2);
     }
 
     .message {
@@ -56,6 +58,7 @@
       color: #d4a017;
       display: none;
       animation: fadeIn 0.6s ease;
+      max-width: 80%;
     }
 
     @keyframes fadeIn {
@@ -72,33 +75,31 @@
   <div id="message" class="message"></div>
 
   <script>
-    const flowers = ["🌻", "🌼", "🌸", "🌹", "💮", "🌷", "💛"];
+    const flowers = ["🌻","🌼","🌸","🌹","🌷","💮"];
     const messages = [
-      "Eres mi alegría más bonita ",
-      "Tu sonrisa me enamora cada día ",
-      "Me encanta pasar tiempo contigo ",
-      "Eres como una flor que ilumina mi vida ",
-      "Gracias por existir ",
-      "Eres lo mejor que me pasó ",
-      "Contigo, todo es más lindo "
+      "Adorei conhecer você 💛",
+      "Seu sorriso ilumina meus dias 🌟",
+      "Você é mais especial para mim do que imagina ✨",
+      "Eu gosto de passar tempo com você 🌸",
+      "Você é minha luz nos meus dias escuros 🌞",
+      "Me haces muy feliz 💕"
     ];
 
     const garden = document.getElementById("garden");
     const messageBox = document.getElementById("message");
 
-    for (let i = 0; i < 21; i++) {
+    flowers.forEach((flowerIcon, index) => {
       let flower = document.createElement("div");
       flower.className = "flower";
-      flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+      flower.textContent = flowerIcon;
 
       flower.onclick = () => {
-        let randomMessage = messages[Math.floor(Math.random() * messages.length)];
-        messageBox.textContent = randomMessage;
+        messageBox.textContent = messages[index];
         messageBox.style.display = "block";
       };
 
       garden.appendChild(flower);
-    }
+    });
   </script>
 </body>
 </html>
