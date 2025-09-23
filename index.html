@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Para ti Mi Reina 🌻</title>
+  <meta charset="UTF-8" />
+  <title>Para mi Reina 🌻</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
+    :root{
+      --petal-translate: -85px;
+    }
+
+    html,body { height:100%; }
     body {
       margin: 0;
       height: 100vh;
@@ -11,62 +17,57 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(ellipse at bottom, #0d1b2a, #000);
+      background: radial-gradient(ellipse at center, #07111a 0%, #000 80%);
       font-family: "Segoe UI", sans-serif;
-      color: white;
+      color: #fff;
     }
 
-    /* Texto arriba */
+    /* título superior */
     #titulo {
       position: absolute;
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
       font-size: 2rem;
-      color: #ffeb3b;
-      text-shadow: 0 0 15px rgba(255, 255, 0, 0.9);
-      font-weight: bold;
-      letter-spacing: 2px;
+      color: #ffe97a;
+      text-shadow: 0 0 12px rgba(255,233,122,0.6);
+      font-weight: 700;
+      z-index: 15;
+      letter-spacing: 1px;
     }
 
-    /* Pantalla de entrada */
+    /* entrada full screen */
     #entrada {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      color: white;
+      inset: 0;
+      background: rgba(0,0,0,0.98);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
-      z-index: 20;
+      font-size: 1.9rem;
+      z-index: 40;
       cursor: pointer;
+      color: #ffe97a;
+      text-align: center;
+      padding: 20px;
     }
 
-    /* Música */
+    /* reproductor */
     #musica {
       position: absolute;
       top: 70px;
       left: 20px;
-      z-index: 10;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 20px;
-      padding: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+      z-index: 30;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(6px);
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
       display: none;
     }
+    #musica iframe { border-radius: 12px; width:380px; height:120px; }
 
-    #musica iframe {
-      border-radius: 16px;
-      width: 380px;
-      height: 120px;
-    }
-
-    /* Flor */
+    /* contenedor central */
     #contenedor-flor {
       position: relative;
       width: 100%;
@@ -76,116 +77,176 @@
       align-items: center;
     }
 
+    /* FLOR */
     .flower {
       position: relative;
-      width: 180px;
-      height: 180px;
-      animation: crecer 2s ease-in-out infinite alternate;
-    }
-
-    .petalo {
-      position: absolute;
-      width: 80px;
-      height: 120px;
-      background: radial-gradient(circle at 30% 30%, #ffeb3b, #fbc02d);
-      border-radius: 60% 60% 40% 40%;
-      box-shadow: 0 0 25px rgba(255, 235, 59, 0.8);
-      transform-origin: bottom center;
-    }
-
-    /* 8 pétalos distribuidos */
-    .petalo:nth-child(1) { transform: rotate(0deg) translateY(-90px); }
-    .petalo:nth-child(2) { transform: rotate(45deg) translateY(-90px); }
-    .petalo:nth-child(3) { transform: rotate(90deg) translateY(-90px); }
-    .petalo:nth-child(4) { transform: rotate(135deg) translateY(-90px); }
-    .petalo:nth-child(5) { transform: rotate(180deg) translateY(-90px); }
-    .petalo:nth-child(6) { transform: rotate(225deg) translateY(-90px); }
-    .petalo:nth-child(7) { transform: rotate(270deg) translateY(-90px); }
-    .petalo:nth-child(8) { transform: rotate(315deg) translateY(-90px); }
-
-    /* Centro */
-    .centro {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 70px;
-      height: 70px;
-      background: radial-gradient(circle, #ffcc00, #ff9800);
-      border-radius: 50%;
-      box-shadow: 0 0 25px rgba(255, 193, 7, 1);
-    }
-
-    /* Tallo */
-    .tallo {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 16px;
-      height: 200px;
-      background: linear-gradient(to bottom, #388e3c, #1b5e20);
-      border-radius: 10px;
-    }
-
-    @keyframes crecer {
-      from { transform: scale(1); }
-      to { transform: scale(1.1); }
-    }
-
-    /* Mensajes flotantes */
-    .mensaje {
-      position: absolute;
-      color: #ffeb3b;
-      font-size: 1.4rem;
-      opacity: 0;
-      text-shadow: 0 0 12px rgba(255,255,0,0.9);
-      animation: luciernaga 6s forwards;
+      width: 260px;
+      height: 260px;
+      display: block;
+      z-index: 5;
       pointer-events: none;
     }
 
+    /* pétalos: colocados en el centro y luego rotados+trasladados */
+    .petalo {
+      --rot: 0deg;
+      --delay: 0s;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 96px;
+      height: 140px;
+      margin: 0;
+      transform-origin: 50% 92%; /* origen en la base del pétalo */
+      background: radial-gradient(circle at 30% 30%, #ffef87 0%, #f7c32b 70%);
+      border-radius: 60% 60% 40% 40%;
+      box-shadow: 0 0 28px rgba(255, 220, 80, 0.45);
+      opacity: 0;
+      /* base transform includes the rotation and outward translate; scale(0) for bloom */
+      transform: rotate(var(--rot)) translateY(var(--translate,var(--petal-translate))) scale(0);
+      animation: petal-bloom 0.6s cubic-bezier(.2,.9,.2,1) forwards;
+      animation-delay: var(--delay);
+      will-change: transform, opacity;
+    }
+
+    /* define angles and stagger */
+    .petalo.p1 { --rot: 0deg;   --delay: 0.05s; }
+    .petalo.p2 { --rot: 45deg;  --delay: 0.10s; }
+    .petalo.p3 { --rot: 90deg;  --delay: 0.15s; }
+    .petalo.p4 { --rot: 135deg; --delay: 0.20s; }
+    .petalo.p5 { --rot: 180deg; --delay: 0.25s; }
+    .petalo.p6 { --rot: 225deg; --delay: 0.30s; }
+    .petalo.p7 { --rot: 270deg; --delay: 0.35s; }
+    .petalo.p8 { --rot: 315deg; --delay: 0.40s; }
+
+    @keyframes petal-bloom {
+      0% { opacity: 0; transform: rotate(var(--rot)) translateY(var(--translate,var(--petal-translate))) scale(0); }
+      60% { opacity: 1; transform: rotate(var(--rot)) translateY(calc(var(--translate,var(--petal-translate)) + 6px)) scale(1.02); }
+      100% { opacity: 1; transform: rotate(var(--rot)) translateY(var(--translate,var(--petal-translate))) scale(1); }
+    }
+
+    /* centro encima de pétalos */
+    .centro {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #ffd54a, #ff8a00);
+      box-shadow: 0 0 40px rgba(255,170,50,0.95), inset 0 -8px 18px rgba(0,0,0,0.18);
+      z-index: 8;
+      opacity: 0;
+      animation: center-appear 0.6s ease forwards;
+      animation-delay: 0.45s;
+    }
+    @keyframes center-appear {
+      from { transform: translate(-50%,-50%) scale(0.6); opacity: 0; }
+      to   { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+    }
+
+    /* tallo debajo */
+    .tallo {
+      position: absolute;
+      left: 50%;
+      top: calc(50% + 120px);
+      transform: translateX(-50%);
+      width: 18px;
+      height: 210px;
+      border-radius: 12px;
+      background: linear-gradient(180deg,#3ea043 0%, #166324 100%);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+      z-index: 2;
+      opacity: 0;
+      animation: tallo-appear 0.6s ease forwards;
+      animation-delay: 0.55s;
+    }
+    @keyframes tallo-appear {
+      from { opacity: 0; transform: translateX(-50%) translateY(10px) scaleY(0.9) }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0) scaleY(1) }
+    }
+
+    /* MENSAJES (luciernaga) */
+    .mensaje {
+      position: absolute;
+      color: #fff9c4;
+      font-size: 1.25rem;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.18);
+      box-shadow: 0 0 14px rgba(255,235,59,0.2);
+      opacity: 0;
+      transform: translateY(0) scale(0.95);
+      pointer-events: none;
+      text-shadow: 0 0 10px rgba(255,243,150,0.5);
+      animation: luciernaga 6s forwards;
+      z-index: 50;
+    }
     @keyframes luciernaga {
-      0% { opacity: 0; transform: scale(0.8); }
-      20% { opacity: 1; transform: scale(1); }
-      80% { opacity: 1; transform: scale(1.1); }
-      100% { opacity: 0; transform: scale(0.8); }
+      0%   { opacity: 0; transform: translateY(0) scale(0.85); }
+      15%  { opacity: 1; transform: translateY(-6px) scale(1); }
+      60%  { opacity: 1; transform: translateY(-18px) scale(1.02); }
+      90%  { opacity: 0.6; transform: translateY(-22px) scale(1.04); }
+      100% { opacity: 0; transform: translateY(-28px) scale(0.9); }
+    }
+
+    /* pequeñas estrellas de fondo (opcional, se generarán desde JS) */
+    .star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 50%;
+      filter: blur(0.3px);
+      opacity: 0.85;
+      z-index: 1;
+      animation: twinkle 2s infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.15; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1.1); }
+    }
+
+    /* evita seleccionar texto al tocar */
+    * { -webkit-user-select:none; -ms-user-select:none; user-select:none; -webkit-tap-highlight-color: transparent; }
+
+    /* responsividad pequeñas pantallas: reduce tamaño */
+    @media (max-width:480px){
+      .flower{ transform: scale(0.8); }
+      #musica iframe{ width: 260px; height: 84px; }
+      .mensaje{ font-size: 1rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Texto arriba -->
   <div id="titulo">✨ Para mi Reina ✨</div>
 
-  <!-- Pantalla de entrada -->
-  <div id="entrada">Toca la pantalla para abrir tu jardín mi Reina🌼</div>
+  <div id="entrada">Toca la pantalla para abrir tu jardín, mi Reina 🌼</div>
 
-  <!-- Música -->
   <div id="musica">
-    <iframe style="border-radius:12px"
-      src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB?utm_source=generator"
-      width="380" height="120" frameBorder="0"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"></iframe>
+    <iframe src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB"
+            allow="autoplay; clipboard-write; encrypted-media;" loading="lazy"></iframe>
   </div>
 
-  <!-- Flor -->
   <div id="contenedor-flor">
-    <div class="flower">
-      <div class="petalo"></div>
-      <div class="petalo"></div>
-      <div class="petalo"></div>
-      <div class="petalo"></div>
-      <div class="petalo"></div>
-      <div class="petalo"></div>
-      <div class="petalo"></div>
-      <div class="petalo"></div>
+    <div class="flower" aria-hidden="true">
+      <div class="petalo p1"></div>
+      <div class="petalo p2"></div>
+      <div class="petalo p3"></div>
+      <div class="petalo p4"></div>
+      <div class="petalo p5"></div>
+      <div class="petalo p6"></div>
+      <div class="petalo p7"></div>
+      <div class="petalo p8"></div>
+
       <div class="centro"></div>
       <div class="tallo"></div>
     </div>
   </div>
 
   <script>
-    // Mensajes
+    // textos que usas
     const mensajes = [
       "Adorei conhecer você",
       "Seu sorriso ilumina meus dias",
@@ -195,33 +256,62 @@
       "Me haces muy feliz"
     ];
 
-    function crearMensaje() {
-      const msg = document.createElement("div");
-      msg.className = "mensaje";
-      msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
+    // Generar estrellas sutiles
+    for (let i = 0; i < 60; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.left = Math.random() * innerWidth + 'px';
+      s.style.top  = Math.random() * innerHeight + 'px';
+      s.style.animationDuration = (1 + Math.random()*2.2).toFixed(2) + 's';
+      s.style.opacity = (0.2 + Math.random()*0.9).toFixed(2);
+      document.body.appendChild(s);
+    }
 
-      // Posición aleatoria alrededor de la flor
-      const radius = 250;
-      const angle = Math.random() * 2 * Math.PI;
+    // función que crea y muestra un mensaje alrededor de la flor
+    function crearMensajeEnPosicion() {
+      const msg = document.createElement('div');
+      msg.className = 'mensaje';
+      msg.textContent = mensajes[Math.floor(Math.random()*mensajes.length)];
+
+      // distancia (radio) mayor para que no se pierda con la flor
+      const radius = Math.min( Math.max(window.innerWidth, window.innerHeight) * 0.25, 360 ); // adaptativo
+      const angle = Math.random() * Math.PI * 2;
       const x = Math.cos(angle) * radius;
       const y = Math.sin(angle) * radius;
 
-      msg.style.left = `calc(50% + ${x}px)`;
-      msg.style.top = `calc(50% + ${y}px)`;
+      // usar calc(50% + xpx) para posicionar relativo al centro de la ventana
+      msg.style.left = `calc(50% + ${Math.round(x)}px)`;
+      msg.style.top  = `calc(50% + ${Math.round(y)}px)`;
 
       document.body.appendChild(msg);
 
-      setTimeout(() => msg.remove(), 6000);
+      // eliminar tras la animación (6s)
+      setTimeout(()=> { msg.remove(); }, 6100);
     }
 
-    // Entrada
-    const entrada = document.getElementById("entrada");
-    const musica = document.getElementById("musica");
-    entrada.addEventListener("click", () => {
-      entrada.style.display = "none";
-      musica.style.display = "block";
-      setInterval(crearMensaje, 4000);
+    // CONTROL de entrada y clic para mostrar mensaje
+    const entrada = document.getElementById('entrada');
+    const musica  = document.getElementById('musica');
+
+    entrada.addEventListener('click', () => {
+      // ocultar pantalla de entrada y mostrar musica
+      entrada.style.display = 'none';
+      musica.style.display = 'block';
+
+      // pequeño delay para evitar que el mismo click dispare mensaje
+      setTimeout(()=> {
+        // al tocar cualquier parte (excepto el reproductor) mostramos un mensaje
+        document.addEventListener('click', function handler(e){
+          // si se clickeó dentro del reproductor, ignorar
+          if (e.target.closest && e.target.closest('#musica')) return;
+          // crear mensaje
+          crearMensajeEnPosicion();
+        });
+      }, 220);
     });
+
+    // evitar scroll/selección accidental en móviles
+    window.addEventListener('touchstart', (e)=>{ e.preventDefault(); }, {passive:false});
   </script>
 </body>
 </html>
