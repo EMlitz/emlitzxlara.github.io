@@ -55,6 +55,20 @@ body {
   align-items: center;
   max-width: 400px;
   z-index: 10;
+  position: relative;
+}
+
+/* título en el centro */
+#titulo {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffe97a;
+  text-shadow: 0 0 12px rgba(255, 243, 150, 0.9);
+  pointer-events: none;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
 }
 
 .girasol {
@@ -113,7 +127,9 @@ body {
     allow="autoplay; clipboard-write; encrypted-media;" loading="lazy"></iframe>
 </div>
 
-<div id="ramo"></div>
+<div id="ramo">
+  <div id="titulo">💛 Para mi reina 💛</div>
+</div>
 
 <script>
 // mensajes románticos
@@ -136,7 +152,7 @@ for (let i = 0; i < 60; i++) {
   document.body.appendChild(s);
 }
 
-// control de posiciones para evitar que se junten
+// control de posiciones para mensajes
 let posiciones = [];
 const separacionMinima = 120;
 
@@ -187,6 +203,16 @@ function generarRamo() {
         msg.remove();
         posiciones = posiciones.filter(([px, py]) => px !== x || py !== y);
       }, 6000);
+
+      // reponer girasol después de 5s
+      setTimeout(() => {
+        const nuevo = document.createElement("div");
+        nuevo.className = "girasol";
+        nuevo.textContent = "🌻";
+        ramo.appendChild(nuevo);
+
+        nuevo.addEventListener("click", g.onclick);
+      }, 5000);
     });
   }
 }
