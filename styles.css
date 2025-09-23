@@ -1,0 +1,98 @@
+body {
+  background: #0b1d2a;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* Tulipán */
+.tulipan {
+  position: relative;
+  bottom: 50px;
+}
+
+/* Tallo */
+.tallo {
+  width: 20px;
+  height: 220px;
+  background: #2e8b57;
+  margin: 0 auto;
+  border-radius: 10px;
+  z-index: -1;
+}
+
+/* Hojas */
+.hoja {
+  position: absolute;
+  width: 60px;
+  height: 100px;
+  background: #2e8b57;
+  border-radius: 50% 50% 0 50%;
+  top: 80px;
+}
+.hoja-izq {
+  left: -40px;
+  transform: rotate(-30deg);
+}
+.hoja-der {
+  right: -40px;
+  transform: scaleX(-1) rotate(-30deg);
+}
+
+/* Flor */
+.flor {
+  position: absolute;
+  bottom: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Pétalos */
+.petalo {
+  position: absolute;
+  width: 80px;
+  height: 120px;
+  background: radial-gradient(circle at 30% 30%, #ffef87 0%, #f7c32b 90%);
+  border-radius: 50% 50% 40% 40%;
+  box-shadow: 0 0 18px rgba(255, 220, 80, 0.45);
+  cursor: pointer;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.petalo-izq {
+  transform: rotate(-15deg) translateX(-35px);
+  z-index: 0;
+}
+.petalo-der {
+  transform: rotate(15deg) translateX(35px);
+  z-index: 0;
+}
+.petalo-frente {
+  z-index: 1;
+}
+
+/* Desvanecer al hacer click */
+.petalo.fade {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* Mensajes */
+.mensaje {
+  position: absolute;
+  color: #fff7a5;
+  font-size: 1.2rem;
+  font-family: sans-serif;
+  text-shadow: 0 0 5px black;
+  animation: aparecer 6s ease forwards;
+}
+
+@keyframes aparecer {
+  0% { opacity: 0; transform: scale(0.5); }
+  10% { opacity: 1; transform: scale(1.1); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: scale(0.8); }
+}
