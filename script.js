@@ -1,34 +1,176 @@
-const mensajes = [
-  "Eres especial 🌟",
-  "Una sorpresa para ti 💛",
-  "Tulipanes para alegrar tu día 🌷",
-  "Que nunca te falte una sonrisa 😊"
-];
-
-// Función mensaje
-function crearMensajeEnPosicion() {
-  const msg = document.createElement("div");
-  msg.className = "mensaje";
-  msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
-
-  const radius = Math.min(Math.max(window.innerWidth, window.innerHeight) * 0.25, 360);
-  const angle = Math.random() * Math.PI * 2;
-  const x = Math.cos(angle) * radius;
-  const y = Math.sin(angle) * radius;
-
-  msg.style.left = `calc(50% + ${Math.round(x)}px)`;
-  msg.style.top  = `calc(50% + ${Math.round(y)}px)`;
-
-  document.body.appendChild(msg);
-
-  setTimeout(() => { msg.remove(); }, 6100);
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Ramo de girasoles 🌻</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #07111a 0%, #000 85%);
+  font-family: "Segoe UI", sans-serif;
+  color: #fff;
 }
 
-// Click en pétalos
-document.querySelectorAll(".petalo").forEach(petalo => {
-  petalo.addEventListener("click", () => {
-    crearMensajeEnPosicion();
-    petalo.classList.add("fade");
-    setTimeout(() => petalo.remove(), 800);
-  });
+/* pantalla de entrada */
+#entrada {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.96);
+  display: flex; justify-content: center; align-items: center;
+  font-size: 1.8rem;
+  z-index: 40;
+  cursor: pointer;
+  color: #ffe97a;
+  text-align: center;
+  padding: 20px;
+}
+
+/* reproductor */
+#musica {
+  position: absolute; top: 20px; left: 20px;
+  z-index: 30;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  display: none;
+}
+#musica iframe {
+  border-radius: 12px;
+  width:300px; height:80px;
+}
+
+/* ramo */
+#ramo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  z-index: 10;
+}
+
+.girasol {
+  font-size: 2.8rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.girasol:hover {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+/* mensaje flotante */
+.mensaje {
+  position: absolute;
+  color: #fff9c4;
+  font-size: 1.2rem;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.5);
+  box-shadow: 0 0 14px rgba(255,235,59,0.3);
+  opacity: 0;
+  text-shadow: 0 0 10px rgba(255,243,150,0.6);
+  animation: flotar 6s forwards;
+  pointer-events: none;
+  z-index: 50;
+}
+@keyframes flotar {
+  0%   { opacity: 0; transform: translateY(0) scale(0.9); }
+  15%  { opacity: 1; transform: translateY(-10px) scale(1); }
+  70%  { opacity: 1; transform: translateY(-30px) scale(1.05); }
+  100% { opacity: 0; transform: translateY(-50px) scale(0.9); }
+}
+
+/* estrellas */
+.star {
+  position: absolute;
+  width: 3px; height: 3px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  filter: blur(0.3px);
+  opacity: 0.8;
+  z-index: 1;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+  from { opacity: 0.2; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1.1); }
+}
+</style>
+</head>
+<body>
+<div id="entrada">🌻 Toca la pantalla para recibir tu ramo de girasoles 🌻</div>
+
+<div id="musica">
+  <iframe src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB"
+    allow="autoplay; clipboard-write; encrypted-media;" loading="lazy"></iframe>
+</div>
+
+<div id="ramo"></div>
+
+<script>
+// mensajes románticos
+const mensajes = [
+  "Adorei conhecer você 💛",
+  "Seu sorriso ilumina meus dias ✨",
+  "Você é mais especial para mim do que imagina 🌟",
+  "Eu gosto de passar tempo com você 🥰",
+  "Você é minha luz nos meus dias escuros 🌞",
+  "Me haces muy feliz 💖"
+];
+
+// estrellas
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  s.style.left = Math.random() * innerWidth + 'px';
+  s.style.top = Math.random() * innerHeight + 'px';
+  s.style.animationDuration = (1 + Math.random()*2.5).toFixed(2) + 's';
+  document.body.appendChild(s);
+}
+
+// generar ramo
+function generarRamo() {
+  const ramo = document.getElementById("ramo");
+  for (let i = 0; i < 15; i++) {
+    const g = document.createElement("div");
+    g.className = "girasol";
+    g.textContent = "🌻";
+    ramo.appendChild(g);
+
+    g.addEventListener("click", () => {
+      const msg = document.createElement("div");
+      msg.className = "mensaje";
+      msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
+
+      const rect = g.getBoundingClientRect();
+      msg.style.left = rect.left + rect.width / 2 + "px";
+      msg.style.top = rect.top - 20 + "px";
+
+      document.body.appendChild(msg);
+      g.remove(); // desaparece el girasol al presionarlo
+
+      setTimeout(() => msg.remove(), 6000);
+    });
+  }
+}
+
+// entrada
+const entrada = document.getElementById('entrada');
+const musica = document.getElementById('musica');
+
+entrada.addEventListener('click', () => {
+  entrada.style.display = 'none';
+  musica.style.display = 'block';
+  generarRamo();
 });
+</script>
+</body>
+</html>
