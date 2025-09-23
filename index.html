@@ -2,31 +2,19 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8" />
-<title>Para mi Reina 🌻</title>
+<title>Ramo de girasoles 🌻</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
 body {
   margin: 0;
   height: 100vh;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
   background: radial-gradient(circle at center, #07111a 0%, #000 85%);
   font-family: "Segoe UI", sans-serif;
   color: #fff;
-}
-
-/* título */
-#titulo {
-  position: absolute;
-  top: 20px; left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  color: #ffe97a;
-  text-shadow: 0 0 12px rgba(255,233,122,0.6);
-  font-weight: 700;
-  z-index: 15;
 }
 
 /* pantalla de entrada */
@@ -44,7 +32,7 @@ body {
 
 /* reproductor */
 #musica {
-  position: absolute; top: 70px; left: 20px;
+  position: absolute; top: 20px; left: 20px;
   z-index: 30;
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(6px);
@@ -55,22 +43,24 @@ body {
 }
 #musica iframe {
   border-radius: 12px;
-  width:320px; height:100px;
+  width:300px; height:80px;
 }
 
-/* ramo de girasoles */
+/* ramo */
 #ramo {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
-  max-width: 300px;
-  z-index: 5;
+  align-items: center;
+  max-width: 400px;
+  z-index: 10;
 }
+
 .girasol {
-  font-size: 3rem;
+  font-size: 2.8rem;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
 }
 .girasol:hover {
   transform: scale(1.2) rotate(-5deg);
@@ -80,15 +70,16 @@ body {
 .mensaje {
   position: absolute;
   color: #fff9c4;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   padding: 6px 12px;
   border-radius: 10px;
-  background: rgba(0,0,0,0.4);
-  box-shadow: 0 0 14px rgba(255,235,59,0.3);
+  background: rgba(0,0,0,0.55);
+  box-shadow: 0 0 14px rgba(255,235,59,0.35);
   opacity: 0;
   text-shadow: 0 0 10px rgba(255,243,150,0.6);
   animation: flotar 6s forwards;
   pointer-events: none;
+  z-index: 9999; /* siempre encima de todo */
 }
 @keyframes flotar {
   0%   { opacity: 0; transform: translateY(0) scale(0.9); }
@@ -115,32 +106,24 @@ body {
 </style>
 </head>
 <body>
-<div id="titulo">✨ Para mi Reina ✨</div>
-<div id="entrada">Toca la pantalla para abrir tu ramo de girasoles 🌻</div>
+<div id="entrada">🌻 Toca la pantalla para recibir tu ramo de girasoles 🌻</div>
 
 <div id="musica">
   <iframe src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB"
     allow="autoplay; clipboard-write; encrypted-media;" loading="lazy"></iframe>
 </div>
 
-<div id="ramo" style="display:none;">
-  <div class="girasol">🌻</div>
-  <div class="girasol">🌻</div>
-  <div class="girasol">🌻</div>
-  <div class="girasol">🌻</div>
-  <div class="girasol">🌻</div>
-  <div class="girasol">🌻</div>
-</div>
+<div id="ramo"></div>
 
 <script>
-// mensajes
+// mensajes románticos
 const mensajes = [
-  "Adorei conhecer você",
-  "Seu sorriso ilumina meus dias",
-  "Você é mais especial para mim do que imagina",
-  "Eu gosto de passar tempo com você",
-  "Você é minha luz nos meus dias escuros",
-  "Me haces muy feliz"
+  "Adorei conhecer você 💛",
+  "Seu sorriso ilumina meus dias ✨",
+  "Você é mais especial para mim do que imagina 🌟",
+  "Eu gosto de passar tempo com você 🥰",
+  "Você é minha luz nos meus dias escuros 🌞",
+  "Me haces muy feliz 💖"
 ];
 
 // estrellas
@@ -153,32 +136,69 @@ for (let i = 0; i < 60; i++) {
   document.body.appendChild(s);
 }
 
+// control de posiciones para evitar que se junten
+let posiciones = [];
+const separacionMinima = 120;
+
+function generarPosicionAleatoria() {
+  let x, y, valido = false, intentos = 0;
+
+  while (!valido && intentos < 50) {
+    x = Math.random() * (window.innerWidth - 220);
+    y = Math.random() * (window.innerHeight - 120);
+    valido = true;
+
+    for (const [px, py] of posiciones) {
+      const dx = x - px;
+      const dy = y - py;
+      if (Math.sqrt(dx*dx + dy*dy) < separacionMinima) {
+        valido = false;
+        break;
+      }
+    }
+    intentos++;
+  }
+  posiciones.push([x, y]);
+  return {x, y};
+}
+
+// generar ramo
+function generarRamo() {
+  const ramo = document.getElementById("ramo");
+  for (let i = 0; i < 15; i++) {
+    const g = document.createElement("div");
+    g.className = "girasol";
+    g.textContent = "🌻";
+    ramo.appendChild(g);
+
+    g.addEventListener("click", () => {
+      const msg = document.createElement("div");
+      msg.className = "mensaje";
+      msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
+
+      const {x, y} = generarPosicionAleatoria();
+      msg.style.left = x + "px";
+      msg.style.top  = y + "px";
+
+      document.body.appendChild(msg);
+      g.remove();
+
+      setTimeout(() => {
+        msg.remove();
+        posiciones = posiciones.filter(([px, py]) => px !== x || py !== y);
+      }, 6000);
+    });
+  }
+}
+
 // entrada
 const entrada = document.getElementById('entrada');
-const ramo = document.getElementById('ramo');
 const musica = document.getElementById('musica');
 
 entrada.addEventListener('click', () => {
   entrada.style.display = 'none';
-  ramo.style.display = 'flex';
   musica.style.display = 'block';
-});
-
-// al tocar un girasol aparece un mensaje
-document.querySelectorAll('.girasol').forEach(g => {
-  g.addEventListener('click', () => {
-    const msg = document.createElement('div');
-    msg.className = 'mensaje';
-    msg.textContent = mensajes[Math.floor(Math.random()*mensajes.length)];
-
-    // posición cerca del girasol
-    const rect = g.getBoundingClientRect();
-    msg.style.left = rect.left + rect.width/2 + 'px';
-    msg.style.top  = rect.top - 20 + 'px';
-
-    document.body.appendChild(msg);
-    setTimeout(()=> msg.remove(), 6000);
-  });
+  generarRamo();
 });
 </script>
 </body>
