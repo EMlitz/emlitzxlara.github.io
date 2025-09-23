@@ -73,13 +73,13 @@ body {
   font-size: 1.2rem;
   padding: 6px 12px;
   border-radius: 10px;
-  background: rgba(0,0,0,0.5);
-  box-shadow: 0 0 14px rgba(255,235,59,0.3);
+  background: rgba(0,0,0,0.55);
+  box-shadow: 0 0 14px rgba(255,235,59,0.35);
   opacity: 0;
   text-shadow: 0 0 10px rgba(255,243,150,0.6);
   animation: flotar 6s forwards;
   pointer-events: none;
-  z-index: 50;
+  z-index: 9999; /* siempre encima de todo */
 }
 @keyframes flotar {
   0%   { opacity: 0; transform: translateY(0) scale(0.9); }
@@ -136,6 +136,32 @@ for (let i = 0; i < 60; i++) {
   document.body.appendChild(s);
 }
 
+// control de posiciones para evitar que se junten
+let posiciones = [];
+const separacionMinima = 120;
+
+function generarPosicionAleatoria() {
+  let x, y, valido = false, intentos = 0;
+
+  while (!valido && intentos < 50) {
+    x = Math.random() * (window.innerWidth - 220);
+    y = Math.random() * (window.innerHeight - 120);
+    valido = true;
+
+    for (const [px, py] of posiciones) {
+      const dx = x - px;
+      const dy = y - py;
+      if (Math.sqrt(dx*dx + dy*dy) < separacionMinima) {
+        valido = false;
+        break;
+      }
+    }
+    intentos++;
+  }
+  posiciones.push([x, y]);
+  return {x, y};
+}
+
 // generar ramo
 function generarRamo() {
   const ramo = document.getElementById("ramo");
@@ -150,14 +176,17 @@ function generarRamo() {
       msg.className = "mensaje";
       msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
 
-      // posición aleatoria en pantalla
-      msg.style.left = Math.random() * (window.innerWidth - 200) + "px";
-      msg.style.top  = Math.random() * (window.innerHeight - 100) + "px";
+      const {x, y} = generarPosicionAleatoria();
+      msg.style.left = x + "px";
+      msg.style.top  = y + "px";
 
       document.body.appendChild(msg);
-      g.remove(); // desaparece el girasol al presionarlo
+      g.remove();
 
-      setTimeout(() => msg.remove(), 6000);
+      setTimeout(() => {
+        msg.remove();
+        posiciones = posiciones.filter(([px, py]) => px !== x || py !== y);
+      }, 6000);
     });
   }
 }
