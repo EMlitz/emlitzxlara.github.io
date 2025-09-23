@@ -150,9 +150,9 @@ function generarRamo() {
       msg.className = "mensaje";
       msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
 
-      const rect = g.getBoundingClientRect();
-      msg.style.left = rect.left + rect.width / 2 + "px";
-      msg.style.top = rect.top - 20 + "px";
+      // posición aleatoria en pantalla
+      msg.style.left = Math.random() * (window.innerWidth - 200) + "px";
+      msg.style.top  = Math.random() * (window.innerHeight - 100) + "px";
 
       document.body.appendChild(msg);
       g.remove(); // desaparece el girasol al presionarlo
