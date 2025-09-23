@@ -9,47 +9,59 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
-      background: linear-gradient(to bottom, #fffbe6, #ffe680);
+      background: linear-gradient(to top, #004d00 0%, #99ff99 100%);
       font-family: "Segoe UI", sans-serif;
       text-align: center;
+      overflow: hidden;
     }
 
     h1 {
-      color: #d4a017;
-      font-size: 2.2rem;
+      color: #ffcc00;
+      font-size: 2.4rem;
+      margin-top: 20px;
       margin-bottom: 10px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
     }
 
     p {
-      color: #444;
+      color: #fff;
       font-size: 1.1rem;
       margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
     }
 
+    /* Jardín */
     .garden {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-      max-width: 95%;
+      position: relative;
+      width: 100%;
+      height: 60vh;
     }
 
     .flower {
-      font-size: 3rem;
+      font-size: 2.8rem;
       cursor: pointer;
-      transition: transform 0.3s ease, filter 0.3s ease;
-      user-select: none;
+      position: absolute;
+      opacity: 0;
+      transform: scale(0);
+      animation: grow 1s forwards;
+    }
+
+    @keyframes grow {
+      from { opacity: 0; transform: scale(0) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
     }
 
     .flower:hover {
-      transform: scale(1.4) rotate(10deg);
+      transform: scale(1.5) rotate(10deg);
       filter: brightness(1.2);
+      transition: transform 0.3s ease, filter 0.3s ease;
     }
 
+    /* Mensaje */
     .message {
-      margin-top: 25px;
+      margin-top: 20px;
       padding: 15px 20px;
       border-radius: 15px;
       background: white;
@@ -68,22 +80,34 @@
   </style>
 </head>
 <body>
-  <h1>Un Jardín Especial Ti</h1>
-  <p>Toca una flor y descubre un mensajito de mi para ti</p>
-  <p>Toque uma flor e descubra uma pequena mensagem minha para você</p>
+  <h1>Un Jardín Especial para Ti</h1>
+  <p>Toca una flor y descubre un mensajito mío 💛</p>
 
+  <!-- 🎶 Spotify -->
+  <div style="margin-bottom: 20px;">
+    <iframe 
+      src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB" 
+      width="300" 
+      height="80" 
+      frameborder="0" 
+      allowtransparency="true" 
+      allow="encrypted-media">
+    </iframe>
+  </div>
+
+  <!-- Jardín -->
   <div class="garden" id="garden"></div>
   <div id="message" class="message"></div>
 
   <script>
-    const flowers = ["🌻","🌼","🌹","🌸","🌷","💐"];
+    const flowers = ["🌻","🌻","🌻","🌻","🌻","🌻"];
     const messages = [
-      "Adorei conhecer você ",
-      "Seu sorriso ilumina meus dias ",
-      "Você é mais especial para mim do que imagina ",
-      "Eu gosto de passar tempo com você ",
-      "Você é minha luz nos meus dias escuros ",
-      "Me haces muy feliz "
+      "Adorei conhecer você 💛",
+      "Seu sorriso ilumina meus dias 🌞",
+      "Você é mais especial para mim do que imagina ✨",
+      "Eu gosto de passar tempo com você 🌿",
+      "Você é minha luz nos meus dias escuros 🌟",
+      "Me haces muy feliz 🌻"
     ];
 
     const garden = document.getElementById("garden");
@@ -93,6 +117,13 @@
       let flower = document.createElement("div");
       flower.className = "flower";
       flower.textContent = flowerIcon;
+
+      // Posición aleatoria
+      flower.style.left = `${Math.random() * 80 + 10}%`;
+      flower.style.top = `${Math.random() * 70 + 10}%`;
+
+      // Retraso para que broten uno por uno
+      flower.style.animationDelay = `${index * 1.2}s`;
 
       flower.onclick = () => {
         messageBox.textContent = messages[index];
