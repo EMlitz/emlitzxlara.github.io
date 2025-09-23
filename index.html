@@ -2,161 +2,184 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Para ti Mi Reina 🌻</title>
+  <title>Para ti 🌻</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background: radial-gradient(circle at center, #001a00, #003300, #000);
+      background: radial-gradient(circle at center, #001a00, #000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    /* --- Pantalla inicial --- */
+    #entrada {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      overflow: hidden;
-      font-family: "Segoe UI", sans-serif;
-      color: #fff;
-      text-align: center;
+      color: yellow;
+      font-size: 1.5rem;
+      z-index: 10;
+      cursor: pointer;
+      transition: opacity 2s ease;
     }
 
-    h1 {
-      color: #ffcc00;
-      font-size: 2.5rem;
-      text-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
-      margin-bottom: 15px;
-    }
-
-    /* Contenedor de la flor */
-    .flower-container {
-      position: relative;
-      width: 200px;
-      height: 300px;
-    }
-
-    /* Tallo */
-    .stem {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 10px;
-      height: 0;
-      background: green;
-      border-radius: 5px;
-      transform: translateX(-50%);
-      animation: growStem 3s forwards;
-    }
-
-    @keyframes growStem {
-      to { height: 200px; }
-    }
-
-    /* Pétalos */
-    .petal {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      background: yellow;
-      border-radius: 50% 50% 0 50%;
+    #entrada.hidden {
       opacity: 0;
-      transform: scale(0);
-      animation: bloom 2s forwards;
+      pointer-events: none;
     }
 
-    .petal1 { top: 20px; left: 50%; transform: translate(-50%) scale(0); animation-delay: 3s; }
-    .petal2 { top: 50px; left: 20%; transform: rotate(-45deg) scale(0); animation-delay: 3.3s; }
-    .petal3 { top: 50px; right: 20%; transform: rotate(45deg) scale(0); animation-delay: 3.6s; }
+    /* --- Spotify --- */
+    #musica {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 5;
+    }
+
+    iframe {
+      border-radius: 12px;
+    }
+
+    /* --- SVG Flor --- */
+    svg {
+      width: 60%;
+      max-width: 500px;
+      z-index: 1;
+    }
+
+    .stem {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: draw 3s forwards;
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .petal {
+      transform: scale(0);
+      transform-origin: center;
+      opacity: 0;
+      animation: bloom 2s forwards;
+      animation-delay: 3s;
+    }
 
     @keyframes bloom {
-      to { opacity: 1; transform: scale(1); }
+      to { transform: scale(1); opacity: 1; }
     }
 
-    /* Centro de la flor */
-    .center {
+    /* --- Luciérnagas con mensajes --- */
+    .mensaje {
       position: absolute;
-      top: 45px;
-      left: 50%;
-      width: 50px;
-      height: 50px;
-      background: orange;
-      border-radius: 50%;
-      transform: translateX(-50%) scale(0);
-      opacity: 0;
-      animation: appearCenter 1.5s forwards;
-      animation-delay: 4s;
-    }
-
-    @keyframes appearCenter {
-      to { opacity: 1; transform: translateX(-50%) scale(1); }
-    }
-
-    /* Mensajes flotantes */
-    .message {
-      position: absolute;
+      color: #ffeb3b;
       font-size: 1.2rem;
-      color: #ffeb99;
       opacity: 0;
-      animation: floatMsg 12s linear infinite;
+      text-shadow: 0 0 10px rgba(255,255,0,0.8);
+      animation: luciernaga 6s infinite;
     }
 
-    @keyframes floatMsg {
-      0% { opacity: 0; transform: translateY(0) scale(0.8); }
-      10% { opacity: 1; }
-      50% { opacity: 1; transform: translateY(-200px) scale(1); }
-      90% { opacity: 0.5; }
-      100% { opacity: 0; transform: translateY(-300px) scale(1.2); }
+    @keyframes luciernaga {
+      0%   { opacity: 0; }
+      20%  { opacity: 1; }
+      50%  { opacity: 1; }
+      80%  { opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    /* --- Estrellas de fondo --- */
+    .star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <h1>Un Jardín Especial para Ti</h1>
 
-  <!-- Spotify embed -->
-  <div style="margin-bottom: 20px;">
-    <iframe 
-      src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB" 
-      width="300" 
-      height="80" 
-      frameborder="0" 
-      allowtransparency="true" 
-      allow="encrypted-media">
+  <!-- Pantalla de entrada -->
+  <div id="entrada">
+    🌟 Toca para abrir 🌟
+  </div>
+
+  <!-- Música -->
+  <div id="musica">
+    <iframe style="border-radius:12px" 
+      src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB?utm_source=generator" 
+      width="250" height="80" frameBorder="0" 
+      allowfullscreen="" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+      loading="lazy">
     </iframe>
   </div>
 
-  <!-- Flor -->
-  <div class="flower-container">
-    <div class="stem"></div>
-    <div class="petal petal1"></div>
-    <div class="petal petal2"></div>
-    <div class="petal petal3"></div>
-    <div class="center"></div>
-  </div>
+  <!-- Flor SVG -->
+  <svg viewBox="0 0 200 200">
+    <line x1="100" y1="200" x2="100" y2="80" stroke="green" stroke-width="4" class="stem"/>
+    <ellipse cx="85" cy="150" rx="15" ry="8" fill="green" opacity="0.8"/>
+    <ellipse cx="115" cy="130" rx="15" ry="8" fill="green" opacity="0.8"/>
+    <circle cx="100" cy="70" r="12" fill="yellow" class="petal"/>
+    <circle cx="90" cy="75" r="12" fill="yellow" class="petal"/>
+    <circle cx="110" cy="75" r="12" fill="yellow" class="petal"/>
+    <circle cx="100" cy="75" r="8" fill="orange" class="petal"/>
+  </svg>
 
+  <!-- Mensajes que flotan como luciérnagas -->
   <script>
-    const messages = [
-      "Adorei conhecer você 💛",
-      "Seu sorriso ilumina meus dias 🌞",
-      "Você é mais especial para mim do que imagina ✨",
-      "Eu gosto de passar tempo com você 🌿",
-      "Você é minha luz nos meus dias escuros 🌟",
-      "Me haces muy feliz 🌻"
+    const mensajes = [
+      "Eres mi alegría 💛",
+      "Mi flor hermosa 🌼",
+      "Brillas como el sol ✨",
+      "Mi razón de sonreír 😊",
+      "Te quiero infinito 💕"
     ];
 
-    function createMessage(text, delay) {
+    function crearMensaje() {
       const msg = document.createElement("div");
-      msg.className = "message";
-      msg.textContent = text;
-
-      // posición aleatoria horizontal
-      msg.style.left = `${Math.random() * 80 + 10}%`;
-      msg.style.bottom = "10px";
-
-      // retraso para que vayan saliendo
-      msg.style.animationDelay = `${delay}s`;
-
+      msg.className = "mensaje";
+      msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
+      msg.style.left = Math.random() * (window.innerWidth - 100) + "px";
+      msg.style.top = Math.random() * (window.innerHeight - 100) + "px";
+      msg.style.animationDuration = "6s";
       document.body.appendChild(msg);
+
+      setTimeout(() => msg.remove(), 6000);
     }
 
-    messages.forEach((m, i) => {
-      createMessage(m, i * 4); // cada 4 segundos aparece uno
+    setInterval(crearMensaje, 3000);
+
+    // Estrellitas de fondo
+    for (let i = 0; i < 50; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.animationDuration = (1 + Math.random() * 2) + "s";
+      document.body.appendChild(star);
+    }
+
+    // Evento entrada
+    const entrada = document.getElementById("entrada");
+    entrada.addEventListener("click", () => {
+      entrada.classList.add("hidden");
     });
   </script>
 </body>
