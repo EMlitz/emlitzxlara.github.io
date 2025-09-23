@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Para mi Reina</title>
+  <title>🌼 Para Ti</title>
   <style>
     body {
       margin: 0;
@@ -15,108 +15,6 @@
       justify-content: center;
       align-items: center;
       color: white;
-    }
-
-    /* Música */
-    #musica {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 10;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 16px;
-      padding: 10px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      display: none;
-    }
-    iframe {
-      border-radius: 12px;
-      width: 280px;
-      height: 80px;
-    }
-
-    /* Flor completa */
-    .flowers {
-      position: relative;
-      width: 300px;
-      height: 500px;
-      transform: scale(1.2);
-      animation: sway 4s ease-in-out infinite alternate;
-    }
-    @keyframes sway {
-      from { transform: rotate(-2deg) scale(1.2); }
-      to   { transform: rotate(2deg) scale(1.2); }
-    }
-
-    /* Ejemplo de estilos base de la flor */
-    .flower {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .flower__leafs {
-      position: relative;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ffeb3b 40%, #fbc02d 100%);
-      animation: bloom 3s ease forwards;
-    }
-    @keyframes bloom {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    .flower__white-circle {
-      position: absolute;
-      top: 35%;
-      left: 35%;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: orange;
-    }
-    .flower__line {
-      position: absolute;
-      top: 100px;
-      left: 50%;
-      width: 6px;
-      height: 200px;
-      background: green;
-      border-radius: 3px;
-    }
-
-    /* Mensajes flotantes */
-    .mensaje {
-      position: absolute;
-      color: #ffeb3b;
-      font-size: 1.3rem;
-      opacity: 0;
-      text-shadow: 0 0 10px rgba(255,255,0,0.8);
-      animation: luciernaga 6s forwards;
-    }
-    @keyframes luciernaga {
-      0%   { opacity: 0; transform: translateY(0); }
-      20%  { opacity: 1; }
-      50%  { opacity: 1; transform: translateY(-20px); }
-      80%  { opacity: 0; }
-      100% { opacity: 0; }
-    }
-
-    /* Estrellas */
-    .star {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: twinkle 2s infinite alternate;
-    }
-    @keyframes twinkle {
-      from { opacity: 0.2; }
-      to { opacity: 1; }
     }
 
     /* Pantalla de entrada */
@@ -136,12 +34,137 @@
       transition: opacity 2s ease;
       cursor: pointer;
     }
+
+    /* Música */
+    #musica {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      display: none;
+    }
+    iframe {
+      border-radius: 12px;
+      width: 280px;
+      height: 80px;
+    }
+
+    /* Flor completa original */
+    .flowers {
+      position: relative;
+      width: 300px;
+      height: 500px;
+      transform: scale(1.1);
+      animation: sway 5s ease-in-out infinite alternate;
+    }
+    @keyframes sway {
+      from { transform: rotate(-2deg) scale(1.1); }
+      to   { transform: rotate(2deg) scale(1.1); }
+    }
+
+    .flower {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .flower__leafs {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffeb3b 40%, #fbc02d 100%);
+      box-shadow: 0 0 25px rgba(255, 223, 0, 0.6);
+      animation: bloom 3s ease forwards;
+    }
+    @keyframes bloom {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .flower__white-circle {
+      position: absolute;
+      top: 38%;
+      left: 38%;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: orange;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+    }
+    .flower__line {
+      position: absolute;
+      top: 140px;
+      left: 50%;
+      width: 8px;
+      height: 220px;
+      background: linear-gradient(to bottom, #1b5e20, #2e7d32);
+      border-radius: 4px;
+    }
+    .flower__line::before {
+      content: "";
+      position: absolute;
+      left: -40px;
+      top: 40px;
+      width: 60px;
+      height: 20px;
+      border-radius: 20px 0 20px 0;
+      background: linear-gradient(to right, #2e7d32, #43a047);
+      transform: rotate(-30deg);
+    }
+    .flower__line::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: 100px;
+      width: 60px;
+      height: 20px;
+      border-radius: 0 20px 0 20px;
+      background: linear-gradient(to left, #2e7d32, #43a047);
+      transform: rotate(30deg);
+    }
+
+    /* Mensajes flotantes */
+    .mensaje {
+      position: absolute;
+      color: #ffeb3b;
+      font-size: 1.3rem;
+      opacity: 0;
+      text-shadow: 0 0 12px rgba(255,255,0,0.9);
+      animation: luciernaga 6s forwards;
+    }
+    @keyframes luciernaga {
+      0%   { opacity: 0; transform: translateY(0); }
+      20%  { opacity: 1; }
+      50%  { opacity: 1; transform: translateY(-25px); }
+      80%  { opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    /* Estrellas */
+    .star {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 2s infinite alternate;
+    }
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to { opacity: 1; }
+    }
   </style>
 </head>
 <body>
 
   <!-- Entrada -->
-  <div id="entrada">Toca la pantalla para entrar a tu jardin mi Reina</div>
+  <div id="entrada">🌼 Toca la pantalla para entrar 🌼</div>
 
   <!-- Música -->
   <div id="musica">
