@@ -9,6 +9,7 @@ body {
   margin: 0;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
@@ -46,6 +47,16 @@ body {
   width:300px; height:80px;
 }
 
+/* título arriba del ramo */
+#titulo {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffe97a;
+  text-shadow: 0 0 12px rgba(255, 243, 150, 0.9);
+  margin-bottom: 20px;
+  z-index: 20;
+}
+
 /* ramo */
 #ramo {
   display: flex;
@@ -55,20 +66,6 @@ body {
   align-items: center;
   max-width: 400px;
   z-index: 10;
-  position: relative;
-}
-
-/* título en el centro */
-#titulo {
-  position: absolute;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ffe97a;
-  text-shadow: 0 0 12px rgba(255, 243, 150, 0.9);
-  pointer-events: none;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 20;
 }
 
 .girasol {
@@ -127,9 +124,8 @@ body {
     allow="autoplay; clipboard-write; encrypted-media;" loading="lazy"></iframe>
 </div>
 
-<div id="ramo">
-  <div id="titulo">💛 Para mi reina 💛</div>
-</div>
+<div id="titulo">💛 Para mi reina 💛</div>
+<div id="ramo"></div>
 
 <script>
 // mensajes románticos
@@ -182,39 +178,38 @@ function generarPosicionAleatoria() {
 function generarRamo() {
   const ramo = document.getElementById("ramo");
   for (let i = 0; i < 15; i++) {
-    const g = document.createElement("div");
-    g.className = "girasol";
-    g.textContent = "🌻";
-    ramo.appendChild(g);
-
-    g.addEventListener("click", () => {
-      const msg = document.createElement("div");
-      msg.className = "mensaje";
-      msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
-
-      const {x, y} = generarPosicionAleatoria();
-      msg.style.left = x + "px";
-      msg.style.top  = y + "px";
-
-      document.body.appendChild(msg);
-      g.remove();
-
-      setTimeout(() => {
-        msg.remove();
-        posiciones = posiciones.filter(([px, py]) => px !== x || py !== y);
-      }, 6000);
-
-      // reponer girasol después de 5s
-      setTimeout(() => {
-        const nuevo = document.createElement("div");
-        nuevo.className = "girasol";
-        nuevo.textContent = "🌻";
-        ramo.appendChild(nuevo);
-
-        nuevo.addEventListener("click", g.onclick);
-      }, 5000);
-    });
+    crearGirasol(ramo);
   }
+}
+
+function crearGirasol(ramo) {
+  const g = document.createElement("div");
+  g.className = "girasol";
+  g.textContent = "🌻";
+  ramo.appendChild(g);
+
+  g.addEventListener("click", () => {
+    const msg = document.createElement("div");
+    msg.className = "mensaje";
+    msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
+
+    const {x, y} = generarPosicionAleatoria();
+    msg.style.left = x + "px";
+    msg.style.top  = y + "px";
+
+    document.body.appendChild(msg);
+    g.remove();
+
+    setTimeout(() => {
+      msg.remove();
+      posiciones = posiciones.filter(([px, py]) => px !== x || py !== y);
+    }, 6000);
+
+    // reponer girasol después de 5s
+    setTimeout(() => {
+      crearGirasol(ramo);
+    }, 5000);
+  });
 }
 
 // entrada
