@@ -13,6 +13,20 @@
       align-items: center;
       background: radial-gradient(ellipse at bottom, #0d1b2a, #000);
       font-family: "Segoe UI", sans-serif;
+      color: white;
+    }
+
+    /* Texto arriba */
+    #titulo {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      color: #ffeb3b;
+      text-shadow: 0 0 15px rgba(255, 255, 0, 0.9);
+      font-weight: bold;
+      letter-spacing: 2px;
     }
 
     /* Pantalla de entrada */
@@ -35,10 +49,10 @@
     /* Música */
     #musica {
       position: absolute;
-      top: 20px;
+      top: 70px;
       left: 20px;
       z-index: 10;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(8px);
       border-radius: 20px;
       padding: 12px;
@@ -52,7 +66,7 @@
       height: 120px;
     }
 
-    /* Contenedor de la flor */
+    /* Flor */
     #contenedor-flor {
       position: relative;
       width: 100%;
@@ -62,11 +76,10 @@
       align-items: center;
     }
 
-    /* Flor con pétalos */
     .flower {
       position: relative;
-      width: 150px;
-      height: 150px;
+      width: 180px;
+      height: 180px;
       animation: crecer 2s ease-in-out infinite alternate;
     }
 
@@ -75,32 +88,32 @@
       width: 80px;
       height: 120px;
       background: radial-gradient(circle at 30% 30%, #ffeb3b, #fbc02d);
-      border-radius: 50% 50% 50% 50%;
+      border-radius: 60% 60% 40% 40%;
       box-shadow: 0 0 25px rgba(255, 235, 59, 0.8);
       transform-origin: bottom center;
     }
 
-    /* 8 pétalos en círculo */
-    .petalo:nth-child(1) { transform: rotate(0deg) translateY(-60px); }
-    .petalo:nth-child(2) { transform: rotate(45deg) translateY(-60px); }
-    .petalo:nth-child(3) { transform: rotate(90deg) translateY(-60px); }
-    .petalo:nth-child(4) { transform: rotate(135deg) translateY(-60px); }
-    .petalo:nth-child(5) { transform: rotate(180deg) translateY(-60px); }
-    .petalo:nth-child(6) { transform: rotate(225deg) translateY(-60px); }
-    .petalo:nth-child(7) { transform: rotate(270deg) translateY(-60px); }
-    .petalo:nth-child(8) { transform: rotate(315deg) translateY(-60px); }
+    /* 8 pétalos distribuidos */
+    .petalo:nth-child(1) { transform: rotate(0deg) translateY(-90px); }
+    .petalo:nth-child(2) { transform: rotate(45deg) translateY(-90px); }
+    .petalo:nth-child(3) { transform: rotate(90deg) translateY(-90px); }
+    .petalo:nth-child(4) { transform: rotate(135deg) translateY(-90px); }
+    .petalo:nth-child(5) { transform: rotate(180deg) translateY(-90px); }
+    .petalo:nth-child(6) { transform: rotate(225deg) translateY(-90px); }
+    .petalo:nth-child(7) { transform: rotate(270deg) translateY(-90px); }
+    .petalo:nth-child(8) { transform: rotate(315deg) translateY(-90px); }
 
-    /* Centro de la flor */
+    /* Centro */
     .centro {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 60px;
-      height: 60px;
-      background: radial-gradient(circle, #ff9800, #e65100);
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, #ffcc00, #ff9800);
       border-radius: 50%;
-      box-shadow: 0 0 15px rgba(255, 152, 0, 0.9);
+      box-shadow: 0 0 25px rgba(255, 193, 7, 1);
     }
 
     /* Tallo */
@@ -109,8 +122,8 @@
       top: 100%;
       left: 50%;
       transform: translateX(-50%);
-      width: 14px;
-      height: 160px;
+      width: 16px;
+      height: 200px;
       background: linear-gradient(to bottom, #388e3c, #1b5e20);
       border-radius: 10px;
     }
@@ -140,6 +153,9 @@
   </style>
 </head>
 <body>
+  <!-- Texto arriba -->
+  <div id="titulo">✨ Para mi Reina ✨</div>
+
   <!-- Pantalla de entrada -->
   <div id="entrada">Toca la pantalla para abrir tu jardín mi Reina🌼</div>
 
@@ -152,7 +168,7 @@
       loading="lazy"></iframe>
   </div>
 
-  <!-- Contenedor de la flor -->
+  <!-- Flor -->
   <div id="contenedor-flor">
     <div class="flower">
       <div class="petalo"></div>
@@ -179,13 +195,12 @@
       "Me haces muy feliz"
     ];
 
-    // Crear mensajes alrededor de la flor
     function crearMensaje() {
       const msg = document.createElement("div");
       msg.className = "mensaje";
       msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
 
-      // Posición aleatoria en círculo más grande
+      // Posición aleatoria alrededor de la flor
       const radius = 250;
       const angle = Math.random() * 2 * Math.PI;
       const x = Math.cos(angle) * radius;
@@ -199,14 +214,12 @@
       setTimeout(() => msg.remove(), 6000);
     }
 
-    // Entrada al jardín
+    // Entrada
     const entrada = document.getElementById("entrada");
     const musica = document.getElementById("musica");
     entrada.addEventListener("click", () => {
       entrada.style.display = "none";
       musica.style.display = "block";
-
-      // empezar mensajes
       setInterval(crearMensaje, 4000);
     });
   </script>
