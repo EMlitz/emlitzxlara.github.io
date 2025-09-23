@@ -2,98 +2,82 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Para ti 🌻</title>
+  <title>🌼 Para ti</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
       background: radial-gradient(circle at center, #001a00, #000);
-      display: flex;
-      justify-content: center;
-      align-items: center;
       overflow: hidden;
-      font-family: "Segoe UI", sans-serif;
-    }
-
-    /* --- Pantalla inicial --- */
-    #entrada {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: black;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      color: yellow;
-      font-size: 1.5rem;
-      z-index: 10;
-      cursor: pointer;
-      transition: opacity 2s ease;
+      font-family: "Segoe UI", sans-serif;
+      color: white;
     }
 
-    #entrada.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* --- Spotify --- */
+    /* --- Música --- */
     #musica {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      z-index: 5;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
 
     iframe {
       border-radius: 12px;
+      width: 300px;
+      height: 80px;
     }
 
-    /* --- SVG Flor --- */
+    /* --- Contenedor del jardín --- */
+    #jardin {
+      display: flex;
+      gap: 60px;
+      align-items: flex-end;
+    }
+
     svg {
-      width: 60%;
-      max-width: 500px;
-      z-index: 1;
+      width: 200px;
+      height: 250px;
     }
 
+    /* Animación del tallo */
     .stem {
       stroke-dasharray: 300;
       stroke-dashoffset: 300;
-      animation: draw 3s forwards;
+      animation: growStem 3s forwards;
     }
 
-    @keyframes draw {
+    @keyframes growStem {
       to { stroke-dashoffset: 0; }
     }
 
+    /* Animación pétalos */
     .petal {
       transform: scale(0);
       transform-origin: center;
       opacity: 0;
-      animation: bloom 2s forwards;
-      animation-delay: 3s;
+      animation: bloom 1.5s forwards;
     }
 
     @keyframes bloom {
       to { transform: scale(1); opacity: 1; }
     }
 
-    /* --- Luciérnagas con mensajes --- */
-    .mensaje {
-      position: absolute;
-      color: #ffeb3b;
-      font-size: 1.2rem;
+    .center {
+      transform: scale(0);
       opacity: 0;
-      text-shadow: 0 0 10px rgba(255,255,0,0.8);
-      animation: luciernaga 6s infinite;
+      animation: appear 1.5s forwards;
     }
 
-    @keyframes luciernaga {
-      0%   { opacity: 0; }
-      20%  { opacity: 1; }
-      50%  { opacity: 1; }
-      80%  { opacity: 0; }
-      100% { opacity: 0; }
+    @keyframes appear {
+      to { transform: scale(1); opacity: 1; }
     }
 
     /* --- Estrellas de fondo --- */
@@ -115,59 +99,76 @@
 </head>
 <body>
 
-  <!-- Pantalla de entrada -->
-  <div id="entrada">
-    🌟 Toca para abrir 🌟
-  </div>
-
   <!-- Música -->
   <div id="musica">
     <iframe style="border-radius:12px" 
       src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB?utm_source=generator" 
-      width="250" height="80" frameBorder="0" 
-      allowfullscreen="" 
+      frameBorder="0" allowfullscreen="" 
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
       loading="lazy">
     </iframe>
   </div>
 
-  <!-- Flor SVG -->
-  <svg viewBox="0 0 200 200">
-    <line x1="100" y1="200" x2="100" y2="80" stroke="green" stroke-width="4" class="stem"/>
-    <ellipse cx="85" cy="150" rx="15" ry="8" fill="green" opacity="0.8"/>
-    <ellipse cx="115" cy="130" rx="15" ry="8" fill="green" opacity="0.8"/>
-    <circle cx="100" cy="70" r="12" fill="yellow" class="petal"/>
-    <circle cx="90" cy="75" r="12" fill="yellow" class="petal"/>
-    <circle cx="110" cy="75" r="12" fill="yellow" class="petal"/>
-    <circle cx="100" cy="75" r="8" fill="orange" class="petal"/>
-  </svg>
+  <!-- Jardín -->
+  <div id="jardin">
+    <!-- Flor 1 -->
+    <svg viewBox="0 0 200 200">
+      <line x1="100" y1="200" x2="100" y2="90" stroke="green" stroke-width="5" class="stem" style="animation-delay:0s"/>
+      <ellipse cx="80" cy="150" rx="20" ry="10" fill="green" opacity="0.7"/>
+      <ellipse cx="120" cy="130" rx="20" ry="10" fill="green" opacity="0.7"/>
+      <defs>
+        <radialGradient id="petalGradient1" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff176"/>
+          <stop offset="100%" stop-color="#fbc02d"/>
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="80" r="10" fill="orange" class="center" style="animation-delay:3.5s"/>
+      <ellipse cx="100" cy="65" rx="20" ry="12" fill="url(#petalGradient1)" class="petal" style="animation-delay:3s"/>
+      <ellipse cx="100" cy="95" rx="20" ry="12" fill="url(#petalGradient1)" class="petal" style="animation-delay:3.2s"/>
+      <ellipse cx="85" cy="80" rx="20" ry="12" transform="rotate(-45 85 80)" fill="url(#petalGradient1)" class="petal" style="animation-delay:3.4s"/>
+      <ellipse cx="115" cy="80" rx="20" ry="12" transform="rotate(45 115 80)" fill="url(#petalGradient1)" class="petal" style="animation-delay:3.6s"/>
+    </svg>
 
-  <!-- Mensajes que flotan como luciérnagas -->
+    <!-- Flor 2 -->
+    <svg viewBox="0 0 200 200">
+      <line x1="100" y1="200" x2="100" y2="90" stroke="green" stroke-width="5" class="stem" style="animation-delay:1s"/>
+      <ellipse cx="80" cy="150" rx="20" ry="10" fill="green" opacity="0.7"/>
+      <ellipse cx="120" cy="130" rx="20" ry="10" fill="green" opacity="0.7"/>
+      <defs>
+        <radialGradient id="petalGradient2" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff176"/>
+          <stop offset="100%" stop-color="#fdd835"/>
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="80" r="10" fill="orange" class="center" style="animation-delay:4.5s"/>
+      <ellipse cx="100" cy="65" rx="20" ry="12" fill="url(#petalGradient2)" class="petal" style="animation-delay:4s"/>
+      <ellipse cx="100" cy="95" rx="20" ry="12" fill="url(#petalGradient2)" class="petal" style="animation-delay:4.2s"/>
+      <ellipse cx="85" cy="80" rx="20" ry="12" transform="rotate(-45 85 80)" fill="url(#petalGradient2)" class="petal" style="animation-delay:4.4s"/>
+      <ellipse cx="115" cy="80" rx="20" ry="12" transform="rotate(45 115 80)" fill="url(#petalGradient2)" class="petal" style="animation-delay:4.6s"/>
+    </svg>
+
+    <!-- Flor 3 -->
+    <svg viewBox="0 0 200 200">
+      <line x1="100" y1="200" x2="100" y2="90" stroke="green" stroke-width="5" class="stem" style="animation-delay:2s"/>
+      <ellipse cx="80" cy="150" rx="20" ry="10" fill="green" opacity="0.7"/>
+      <ellipse cx="120" cy="130" rx="20" ry="10" fill="green" opacity="0.7"/>
+      <defs>
+        <radialGradient id="petalGradient3" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#fff176"/>
+          <stop offset="100%" stop-color="#fdd835"/>
+        </radialGradient>
+      </defs>
+      <circle cx="100" cy="80" r="10" fill="orange" class="center" style="animation-delay:5.5s"/>
+      <ellipse cx="100" cy="65" rx="20" ry="12" fill="url(#petalGradient3)" class="petal" style="animation-delay:5s"/>
+      <ellipse cx="100" cy="95" rx="20" ry="12" fill="url(#petalGradient3)" class="petal" style="animation-delay:5.2s"/>
+      <ellipse cx="85" cy="80" rx="20" ry="12" transform="rotate(-45 85 80)" fill="url(#petalGradient3)" class="petal" style="animation-delay:5.4s"/>
+      <ellipse cx="115" cy="80" rx="20" ry="12" transform="rotate(45 115 80)" fill="url(#petalGradient3)" class="petal" style="animation-delay:5.6s"/>
+    </svg>
+  </div>
+
   <script>
-    const mensajes = [
-      "Eres mi alegría 💛",
-      "Mi flor hermosa 🌼",
-      "Brillas como el sol ✨",
-      "Mi razón de sonreír 😊",
-      "Te quiero infinito 💕"
-    ];
-
-    function crearMensaje() {
-      const msg = document.createElement("div");
-      msg.className = "mensaje";
-      msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
-      msg.style.left = Math.random() * (window.innerWidth - 100) + "px";
-      msg.style.top = Math.random() * (window.innerHeight - 100) + "px";
-      msg.style.animationDuration = "6s";
-      document.body.appendChild(msg);
-
-      setTimeout(() => msg.remove(), 6000);
-    }
-
-    setInterval(crearMensaje, 3000);
-
-    // Estrellitas de fondo
-    for (let i = 0; i < 50; i++) {
+    // Estrellitas mágicas
+    for (let i = 0; i < 80; i++) {
       const star = document.createElement("div");
       star.className = "star";
       star.style.left = Math.random() * window.innerWidth + "px";
@@ -175,12 +176,7 @@
       star.style.animationDuration = (1 + Math.random() * 2) + "s";
       document.body.appendChild(star);
     }
-
-    // Evento entrada
-    const entrada = document.getElementById("entrada");
-    entrada.addEventListener("click", () => {
-      entrada.classList.add("hidden");
-    });
   </script>
+
 </body>
 </html>
