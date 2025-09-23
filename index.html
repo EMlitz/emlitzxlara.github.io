@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🌼 Para Ti</title>
+  <meta charset="UTF-8">
+  <title>Para ti Mi Reina 🌻</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
-      background: radial-gradient(circle at center, #001a00, #000);
       overflow: hidden;
-      font-family: "Segoe UI", sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
+      background: linear-gradient(to top, #003300, #99cc66);
+      font-family: "Segoe UI", sans-serif;
     }
 
     /* Pantalla de entrada */
@@ -31,7 +29,6 @@
       align-items: center;
       font-size: 2rem;
       z-index: 20;
-      transition: opacity 2s ease;
       cursor: pointer;
     }
 
@@ -43,188 +40,163 @@
       z-index: 10;
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(8px);
-      border-radius: 16px;
-      padding: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border-radius: 20px;
+      padding: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
       display: none;
     }
-    iframe {
-      border-radius: 12px;
-      width: 280px;
-      height: 80px;
+
+    #musica iframe {
+      border-radius: 16px;
+      width: 380px;
+      height: 120px;
     }
 
-    /* Flor completa original */
+    /* Contenedor central para la flor */
+    #contenedor-flor {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Flor (CSS puro) */
     .flowers {
       position: relative;
-      width: 300px;
-      height: 500px;
-      transform: scale(1.1);
-      animation: sway 5s ease-in-out infinite alternate;
-    }
-    @keyframes sway {
-      from { transform: rotate(-2deg) scale(1.1); }
-      to   { transform: rotate(2deg) scale(1.1); }
+      transform: scale(1.5);
     }
 
     .flower {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .flower__leafs {
       position: relative;
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ffeb3b 40%, #fbc02d 100%);
-      box-shadow: 0 0 25px rgba(255, 223, 0, 0.6);
-      animation: bloom 3s ease forwards;
-    }
-    @keyframes bloom {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-    .flower__white-circle {
-      position: absolute;
-      top: 38%;
-      left: 38%;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: orange;
-      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
-    }
-    .flower__line {
-      position: absolute;
-      top: 140px;
-      left: 50%;
-      width: 8px;
-      height: 220px;
-      background: linear-gradient(to bottom, #1b5e20, #2e7d32);
-      border-radius: 4px;
-    }
-    .flower__line::before {
-      content: "";
-      position: absolute;
-      left: -40px;
-      top: 40px;
-      width: 60px;
-      height: 20px;
-      border-radius: 20px 0 20px 0;
-      background: linear-gradient(to right, #2e7d32, #43a047);
-      transform: rotate(-30deg);
-    }
-    .flower__line::after {
-      content: "";
-      position: absolute;
-      right: -40px;
-      top: 100px;
-      width: 60px;
-      height: 20px;
-      border-radius: 0 20px 0 20px;
-      background: linear-gradient(to left, #2e7d32, #43a047);
-      transform: rotate(30deg);
+      width: 120px;
+      height: 120px;
     }
 
-    /* Mensajes flotantes */
+    .flower__leafs {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffeb3b 40%, #fbc02d 100%);
+      box-shadow: 0 0 25px rgba(255, 235, 59, 0.8);
+      animation: crecer 2s ease-in-out infinite alternate;
+    }
+
+    .flower__white-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      background: #f57f17;
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(255, 152, 0, 0.9);
+    }
+
+    .flower__line {
+      position: absolute;
+      bottom: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 10px;
+      height: 120px;
+      background: linear-gradient(to bottom, #388e3c, #1b5e20);
+      border-radius: 10px;
+    }
+
+    @keyframes crecer {
+      from { transform: scale(1); }
+      to { transform: scale(1.15); }
+    }
+
+    /* Mensajes flotantes alrededor de la flor */
     .mensaje {
       position: absolute;
       color: #ffeb3b;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       opacity: 0;
       text-shadow: 0 0 12px rgba(255,255,0,0.9);
       animation: luciernaga 6s forwards;
-    }
-    @keyframes luciernaga {
-      0%   { opacity: 0; transform: translateY(0); }
-      20%  { opacity: 1; }
-      50%  { opacity: 1; transform: translateY(-25px); }
-      80%  { opacity: 0; }
-      100% { opacity: 0; }
+      pointer-events: none;
     }
 
-    /* Estrellas */
-    .star {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: white;
-      border-radius: 50%;
-      opacity: 0.8;
-      animation: twinkle 2s infinite alternate;
-    }
-    @keyframes twinkle {
-      from { opacity: 0.2; }
-      to { opacity: 1; }
+    @keyframes luciernaga {
+      0% { opacity: 0; transform: scale(0.8); }
+      20% { opacity: 1; transform: scale(1); }
+      80% { opacity: 1; transform: scale(1.1); }
+      100% { opacity: 0; transform: scale(0.8); }
     }
   </style>
 </head>
 <body>
-
-  <!-- Entrada -->
-  <div id="entrada">🌼 Toca la pantalla para entrar 🌼</div>
+  <!-- Pantalla de entrada -->
+  <div id="entrada">Toca la pantalla para abrir tu jardín mi Reina🌼</div>
 
   <!-- Música -->
   <div id="musica">
-    <iframe style="border-radius:12px" 
-      src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB?utm_source=generator" 
-      frameBorder="0" allowfullscreen="" 
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-      loading="lazy">
-    </iframe>
+    <iframe style="border-radius:12px"
+      src="https://open.spotify.com/embed/track/2mRwodUOATBk5spcUsEidB?utm_source=generator"
+      width="380" height="120" frameBorder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy"></iframe>
   </div>
 
-  <!-- UNA SOLA Flor -->
-  <div class="flowers">
-    <div class="flower flower--1">
-      <div class="flower__leafs flower__leafs--1">
-        <div class="flower__white-circle"></div>
+  <!-- Contenedor de la flor -->
+  <div id="contenedor-flor">
+    <div class="flowers">
+      <div class="flower flower--1">
+        <div class="flower__leafs flower__leafs--1">
+          <div class="flower__white-circle"></div>
+        </div>
+        <div class="flower__line"></div>
       </div>
-      <div class="flower__line"></div>
     </div>
   </div>
 
   <script>
-    // Entrada
-    const entrada = document.getElementById("entrada");
-    const musica = document.getElementById("musica");
-    entrada.addEventListener("click", () => {
-      entrada.style.opacity = "0";
-      setTimeout(() => entrada.style.display = "none", 2000);
-      musica.style.display = "block";
-    });
-
-    // Estrellas
-    for (let i = 0; i < 80; i++) {
-      const star = document.createElement("div");
-      star.className = "star";
-      star.style.left = Math.random() * window.innerWidth + "px";
-      star.style.top = Math.random() * window.innerHeight + "px";
-      star.style.animationDuration = (1 + Math.random() * 2) + "s";
-      document.body.appendChild(star);
-    }
-
     // Mensajes
     const mensajes = [
-      "Eres mi alegría 💛",
-      "Mi flor hermosa 🌼",
-      "Brillas como el sol ✨",
-      "Mi razón de sonreír 😊",
-      "Te quiero infinito 💕"
+      "Adorei conhecer você",
+      "Seu sorriso ilumina meus dias",
+      "Você é mais especial para mim do que imagina",
+      "Eu gosto de passar tempo com você",
+      "Você é minha luz nos meus dias escuros",
+      "Me haces muy feliz"
     ];
+
+    // Crear mensajes alrededor de la flor
     function crearMensaje() {
       const msg = document.createElement("div");
       msg.className = "mensaje";
       msg.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
-      msg.style.left = Math.random() * (window.innerWidth - 150) + "px";
-      msg.style.top = Math.random() * (window.innerHeight - 150) + "px";
-      msg.style.animationDuration = "6s";
+
+      // Posición aleatoria en círculo alrededor de la flor
+      const radius = 180;
+      const angle = Math.random() * 2 * Math.PI;
+      const x = Math.cos(angle) * radius;
+      const y = Math.sin(angle) * radius;
+
+      msg.style.left = `calc(50% + ${x}px)`;
+      msg.style.top = `calc(50% + ${y}px)`;
+
       document.body.appendChild(msg);
+
       setTimeout(() => msg.remove(), 6000);
     }
-    setInterval(crearMensaje, 4000);
+
+    // Entrada al jardín
+    const entrada = document.getElementById("entrada");
+    const musica = document.getElementById("musica");
+    entrada.addEventListener("click", () => {
+      entrada.style.display = "none";
+      musica.style.display = "block";
+
+      // empezar mensajes
+      setInterval(crearMensaje, 4000);
+    });
   </script>
 </body>
 </html>
