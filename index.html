@@ -57,17 +57,19 @@ body {
   z-index: 20;
 }
 
-/* ramo */
+/* ramo con 3 filas */
 #ramo {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
   align-items: center;
-  max-width: 400px;
   z-index: 10;
 }
-
+.fila {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
 .girasol {
   font-size: 2.8rem;
   cursor: pointer;
@@ -154,18 +156,14 @@ const separacionMinima = 120;
 
 function generarPosicionAleatoria() {
   let x, y, valido = false, intentos = 0;
-
   while (!valido && intentos < 50) {
     x = Math.random() * (window.innerWidth - 220);
     y = Math.random() * (window.innerHeight - 120);
     valido = true;
-
     for (const [px, py] of posiciones) {
-      const dx = x - px;
-      const dy = y - py;
+      const dx = x - px, dy = y - py;
       if (Math.sqrt(dx*dx + dy*dy) < separacionMinima) {
-        valido = false;
-        break;
+        valido = false; break;
       }
     }
     intentos++;
@@ -174,19 +172,12 @@ function generarPosicionAleatoria() {
   return {x, y};
 }
 
-// generar ramo
-function generarRamo() {
-  const ramo = document.getElementById("ramo");
-  for (let i = 0; i < 15; i++) {
-    crearGirasol(ramo);
-  }
-}
-
-function crearGirasol(ramo) {
+// crear girasol con evento
+function crearGirasol(ramo, fila) {
   const g = document.createElement("div");
   g.className = "girasol";
   g.textContent = "🌻";
-  ramo.appendChild(g);
+  fila.appendChild(g);
 
   g.addEventListener("click", () => {
     const msg = document.createElement("div");
@@ -207,9 +198,30 @@ function crearGirasol(ramo) {
 
     // reponer girasol después de 5s
     setTimeout(() => {
-      crearGirasol(ramo);
+      crearGirasol(ramo, fila);
     }, 5000);
   });
+}
+
+// generar ramo en forma de pirámide
+function generarRamo() {
+  const ramo = document.getElementById("ramo");
+
+  const fila1 = document.createElement("div");
+  fila1.className = "fila";
+  for (let i = 0; i < 5; i++) crearGirasol(ramo, fila1);
+
+  const fila2 = document.createElement("div");
+  fila2.className = "fila";
+  for (let i = 0; i < 4; i++) crearGirasol(ramo, fila2);
+
+  const fila3 = document.createElement("div");
+  fila3.className = "fila";
+  for (let i = 0; i < 2; i++) crearGirasol(ramo, fila3);
+
+  ramo.appendChild(fila1);
+  ramo.appendChild(fila2);
+  ramo.appendChild(fila3);
 }
 
 // entrada
